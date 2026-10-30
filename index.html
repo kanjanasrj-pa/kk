@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeedShop | ตลาดเมล็ดพันธุ์</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="#" class="logo" onclick="showPage('home')">🌱 SeedShop</a>
+
+    <nav>
+        <a href="#" onclick="showPage('home')">หน้าแรก</a>
+        <a href="#" onclick="showPage('products')">สินค้า</a>
+        <a href="#" onclick="showPage('orders')">คำสั่งซื้อ</a>
+        <a href="#" onclick="showPage('cart')">ตะกร้า (<span id="cartCount">0</span>)</a>
+    </nav>
+
+    <div id="navActions"></div>
+</header>
+
+<main>
+
+    <!-- หน้าแรก -->
+    <section id="homePage" class="page active">
+        <div class="hero">
+            <div>
+                <h1>SeedShop</h1>
+                <h2>เมล็ดพันธุ์คุณภาพ เพื่อการเติบโตที่ยั่งยืน</h2>
+                <p>เลือกเมล็ดพันธุ์ที่ใช่ เริ่มต้นปลูกสิ่งดี ๆ ได้แล้ววันนี้</p>
+                <button onclick="showPage('products')" class="btn">เลือกซื้อสินค้า</button>
+            </div>
+            <div class="hero-image">🌱🌻🌿</div>
+        </div>
+
+        <h2 class="section-title">หมวดหมู่สินค้า</h2>
+
+        <div class="category-grid">
+            <div class="category" onclick="filterCategory('ผัก')">
+                🥬 <h3>เมล็ดผัก</h3>
+            </div>
+            <div class="category" onclick="filterCategory('ดอกไม้')">
+                🌻 <h3>เมล็ดดอกไม้</h3>
+            </div>
+            <div class="category" onclick="filterCategory('ผลไม้')">
+                🍉 <h3>เมล็ดผลไม้</h3>
+            </div>
+            <div class="category" onclick="filterCategory('สมุนไพร')">
+                🌿 <h3>เมล็ดสมุนไพร</h3>
+            </div>
+        </div>
+
+        <h2 class="section-title">สินค้าแนะนำ</h2>
+        <div id="homeProducts" class="product-grid"></div>
+    </section>
+
+    <!-- หน้าสินค้า -->
+    <section id="productsPage" class="page">
+        <h1 class="section-title">สินค้าทั้งหมด</h1>
+
+        <div class="toolbar">
+            <input id="searchInput" placeholder="ค้นหาสินค้า..." oninput="renderProducts()">
+
+            <select id="categoryFilter" onchange="renderProducts()">
+                <option value="">ทุกหมวดหมู่</option>
+                <option value="ผัก">ผัก</option>
+                <option value="ดอกไม้">ดอกไม้</option>
+                <option value="ผลไม้">ผลไม้</option>
+                <option value="สมุนไพร">สมุนไพร</option>
+            </select>
+        </div>
+
+        <div id="productList" class="product-grid"></div>
+    </section>
+
+    <!-- หน้าเข้าสู่ระบบ -->
+    <section id="loginPage" class="page">
+        <div class="auth-card">
+            <h1>เข้าสู่ระบบ</h1>
+            <p>ยินดีต้อนรับกลับสู่ SeedShop</p>
+
+            <form id="loginForm">
+                <label>อีเมล</label>
+                <input type="email" id="loginEmail" required>
+
+                <label>รหัสผ่าน</label>
+                <input type="password" id="loginPassword" required>
+
+                <button class="btn full">เข้าสู่ระบบ</button>
+            </form>
+
+            <p>ยังไม่มีบัญชี?
+                <a href="#" onclick="showPage('register')">สมัครสมาชิก</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- หน้าสมัครสมาชิก -->
+    <section id="registerPage" class="page">
+        <div class="auth-card wide">
+            <h1>สมัครสมาชิก</h1>
+            <p>สร้างบัญชี SeedShop ของคุณ</p>
+
+            <form id="registerForm" class="form-grid">
+                <div>
+                    <label>ชื่อ-นามสกุล</label>
+                    <input id="regName" required>
+                </div>
+
+                <div>
+                    <label>อีเมล</label>
+                    <input id="regEmail" type="email" required>
+                </div>
+
+                <div>
+                    <label>เบอร์โทรศัพท์</label>
+                    <input id="regPhone" required>
+                </div>
+
+                <div>
+                    <label>ประเภทสมาชิก</label>
+                    <select id="regRole">
+                        <option value="customer">ลูกค้า</option>
+                        <option value="seller">ผู้ขาย</option>
+                    </select>
+                </div>
+
+                <div class="span-2">
+                    <label>ที่อยู่</label>
+                    <textarea id="regAddress" required></textarea>
+                </div>
+
+                <div>
+                    <label>รหัสผ่าน</label>
+                    <input id="regPassword" type="password" minlength="6" required>
+                </div>
+
+                <div>
+                    <label>ยืนยันรหัสผ่าน</label>
+                    <input id="regConfirm" type="password" minlength="6" required>
+                </div>
+
+                <button class="btn full span-2">สมัครสมาชิก</button>
+            </form>
+
+            <p>มีบัญชีแล้ว?
+                <a href="#" onclick="showPage('login')">เข้าสู่ระบบ</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- หน้าโปรไฟล์ -->
+    <section id="profilePage" class="page">
+        <div class="auth-card wide">
+            <h1>ข้อมูลสมาชิก</h1>
+
+            <div class="profile-icon">👤</div>
+            <h2 id="profileName"></h2>
+            <span id="profileRole" class="role"></span>
+
+            <form id="profileForm">
+                <label>รหัสสมาชิก</label>
+                <input id="profileId" disabled>
+
+                <label>ชื่อ-นามสกุล</label>
+                <input id="profileNameInput" required>
+
+                <label>อีเมล</label>
+                <input id="profileEmail" disabled>
+
+                <label>เบอร์โทรศัพท์</label>
+                <input id="profilePhone" required>
+
+                <label>ที่อยู่จัดส่ง</label>
+                <textarea id="profileAddress" required></textarea>
+
+                <button class="btn full">บันทึกข้อมูล</button>
+            </form>
+
+            <button class="btn logout full" onclick="logout()">ออกจากระบบ</button>
+        </div>
+
+        <!-- ระบบผู้ขาย -->
+        <div id="sellerPanel" class="auth-card wide hidden">
+            <h2>จัดการสินค้า (สำหรับผู้ขาย)</h2>
+
+            <form id="addProductForm">
+                <label>ชื่อสินค้า</label>
+                <input id="newProductName" required>
+
+                <label>หมวดหมู่</label>
+                <select id="newProductCategory">
+                    <option>ผัก</option>
+                    <option>ดอกไม้</option>
+                    <option>ผลไม้</option>
+                    <option>สมุนไพร</option>
+                </select>
+
+                <label>ราคา</label>
+                <input id="newProductPrice" type="number" min="1" required>
+
+                <label>จำนวนสินค้า</label>
+                <input id="newProductStock" type="number" min="0" required>
+
+                <label>รายละเอียดสินค้า</label>
+                <textarea id="newProductDescription"></textarea>
+
+                <button class="btn full">เพิ่มสินค้า</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- หน้าตะกร้า -->
+    <section id="cartPage" class="page">
+        <h1 class="section-title">ตะกร้าสินค้า 🛒</h1>
+        <div id="cartContent"></div>
+    </section>
+
+    <!-- หน้าคำสั่งซื้อ -->
+    <section id="ordersPage" class="page">
+        <h1 class="section-title">ประวัติคำสั่งซื้อ</h1>
+        <div id="ordersContent"></div>
+    </section>
+
+</main>
+
+<footer>
+    <h2>KANJANA SRIJAN</h2>
+    <p>SPUKK คณะเทคโนโลยีสารสนเทศ</p>
+    <small>สาขานวัฒกรรมธุรกิจดิจิทัล ชั้นปี 3</small>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
